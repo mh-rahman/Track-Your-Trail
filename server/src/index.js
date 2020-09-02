@@ -1,8 +1,17 @@
+// import Models (Schemas)
 require("./models/User");
+require("./models/Track");
+
+// Import Libraries
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
+// Import routes
 const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
+
+// Import Middlewares
 const requireAuth = require("./middlewares/requireAuth");
 
 // app represents our entire application
@@ -10,12 +19,14 @@ const requireAuth = require("./middlewares/requireAuth");
 const app = express();
 
 app.use(bodyParser.json());
-app.use(authRoutes);
 
-// const mongoUri =
-//   "mongodb+srv://admin:KzCzp1M1G0n3usnR@cluster0.n6vnk.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority";
+// Use routers exported by route files
+app.use(authRoutes);
+app.use(trackRoutes);
+
 require("dotenv").config();
 const mongoUri = process.env.mongoUri;
+const port = process.env.PORT || 3000;
 
 mongoose.connect(mongoUri, {
   // Adding these lines to avoid some common errors/warnings
@@ -23,20 +34,21 @@ mongoose.connect(mongoUri, {
   useCreateIndex: true,
 });
 
-// After connecting to server or to detect errors
+// After connecting to server
 mongoose.connection.on("connected", () => {
   console.log("Connected to mongo instance!");
 });
 
+// If connection fails
 mongoose.connection.on("error", (err) => {
   console.log("Error: Cannot connect to mongo instance!");
 });
 
-// Whenever a '/' request is made the callback function, and any middlewares, is automatically called with res and req objects
+// Whenever a '/' request is made, the callback function, and any middlewares, is automatically called with res and req objects
 app.get("/", requireAuth, (req, res) => {
   res.send(`Emamil = ${req.user.email}`);
 });
 
-app.listen(3000, () => {
-  console.log("Connected to port 3000");
+app.listen(port, () => {
+  console.log(`Connected to port ${port}`);
 });
