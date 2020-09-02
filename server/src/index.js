@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
+const requireAuth = require("./middlewares/requireAuth");
 
 // app represents our entire application
 // associate different route handlers with it
@@ -31,9 +32,9 @@ mongoose.connection.on("error", (err) => {
   console.log("Error: Cannot connect to mongo instance!");
 });
 
-// Whenever a '/' request is made the callback function is automatically called with res and req objects
-app.get("/", (req, res) => {
-  res.send("Hi There!!");
+// Whenever a '/' request is made the callback function, and any middlewares, is automatically called with res and req objects
+app.get("/", requireAuth, (req, res) => {
+  res.send(`Emamil = ${req.user.email}`);
 });
 
 app.listen(3000, () => {
