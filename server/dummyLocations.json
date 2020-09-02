@@ -1,0 +1,27 @@
+{
+  "name": "My new track",
+  "locations": [
+    {
+      "timeStamp": 101,
+      "coords": {
+        "latitude": 32,
+        "longitude": 42,
+        "altitude": 0,
+        "accuracy": 1,
+        "heading": -1,
+        "speed": 120
+      }
+    },
+    {
+      "timeStamp": 110,
+      "coords": {
+        "latitude": 33,
+        "longitude": 43,
+        "altitude": 10,
+        "accuracy": 0.9,
+        "heading": 0,
+        "speed": 0
+      }
+    }
+  ]
+}

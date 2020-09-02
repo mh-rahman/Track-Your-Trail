@@ -1,4 +1,4 @@
-// import Models (Schemas)
+// import Models (Schemas) - basically initializing models for the one and only time
 require("./models/User");
 require("./models/Track");
 

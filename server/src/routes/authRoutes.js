@@ -40,6 +40,7 @@ router.post("/signin", async (req, res) => {
   }
 
   try {
+    // call the comparePassword function we wrote in User.js model file
     await user.comparePassword(password);
     const token = jwt.sign({ user_id: user._id }, secret);
     console.log("Signed in");

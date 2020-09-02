@@ -29,11 +29,9 @@ module.exports = (req, res, next) => {
 
     // get usuerid from token
     const { user_id } = payload;
-    console.log(user_id);
 
     // making a async call to DB to get user details
     const user = await User.findById(user_id);
-    console.log(user);
 
     // add user to header and pass it to next middleware to be used (display profile screen etc)
     req.user = user;
