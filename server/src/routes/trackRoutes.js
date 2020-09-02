@@ -17,7 +17,7 @@ router.use(requireAuth);
 router.get("/tracks", async (req, res) => {
   try {
     const user = req.user;
-    console.log(user);
+    // console.log(user);
     // Track model have an attribue (column) named userId
     const tracks = await Track.find({ userId: user._id });
     res.send(tracks);
