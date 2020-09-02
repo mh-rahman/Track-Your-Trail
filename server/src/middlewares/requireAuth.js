@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = mongoose.model("User");
 
+require("dotenv").config();
+const secret = process.env.secret;
+
 // export a function that accepts request, response and next
 // next - since this is a middleware function and will have to use next to notify the middlewares down in line to be run
 module.exports = (req, res, next) => {
@@ -19,7 +22,7 @@ module.exports = (req, res, next) => {
   // jwt verify arguments: token, secret, callback with error and pyload
   // if error, some error will be set and payload will be empty.
   // Else err is note and payload will be set.
-  jwt.verify(token, "My_Secret", async (err, payload) => {
+  jwt.verify(token, secret, async (err, payload) => {
     if (err) {
       return res.status(401).send("Error: You must be logged in 2");
     }

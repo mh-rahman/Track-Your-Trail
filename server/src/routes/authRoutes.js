@@ -6,13 +6,16 @@ const User = mongoose.model("User");
 
 const router = express.Router();
 
+require("dotenv").config();
+const secret = process.env.secret;
+
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = new User({ email, password });
     // async save the data in the DB
     await user.save();
-    token = jwt.sign({ user_id: user._id }, "My_Secret");
+    token = jwt.sign({ user_id: user._id }, secret);
     res.send({ token });
   } catch (err) {
     return res.status(422).send(err.message);
@@ -38,7 +41,7 @@ router.post("/signin", async (req, res) => {
 
   try {
     await user.comparePassword(password);
-    const token = jwt.sign({ user_id: user._id }, "My_Secret");
+    const token = jwt.sign({ user_id: user._id }, secret);
     console.log("Signed in");
     res.send({ token });
   } catch (err) {
